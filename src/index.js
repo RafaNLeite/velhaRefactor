@@ -1,12 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function Casa(props) {
+    return (
+        <div className="casa" onClick={() => alert('click')}>
+            {props.value}
+        </div>
+    );
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+class Board extends React.Component {
+    renderCasa(i) {
+        return (
+            <Casa
+                value={this.props.i}
+                onClick={() => this.props.onClick(i)}
+            />
+        );
+    }
+    render() {
+        return (
+            <div>
+                <div id="jogo">
+                    <div className="linha">
+                        {this.renderCasa(11)}
+                        {this.renderCasa(12)}
+                        {this.renderCasa(13)}
+                    </div>
+                    <div className="linha">
+                        {this.renderCasa(21)}
+                        {this.renderCasa(22)}
+                        {this.renderCasa(23)}
+                    </div>
+                    <div className="linha">
+                        {this.renderCasa(31)}
+                        {this.renderCasa(32)}
+                        {this.renderCasa(33)}
+                    </div>
+                    <input type="button" className="botao" name="limpar" value="Reset" onclick="limpa();" />
+                </div>
+                <div className="direita"><p>É a vez de:</p> <text id="mostra" class="vez">X</text></div>
+            </div>
+        );
+    }
+}
+
+// ===================
+ReactDOM.render(
+    <Board />,
+    document.getElementById('root')
+);
