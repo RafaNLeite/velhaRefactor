@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Casa(props) {
+class Casa extends React.Component {
+    render(){
     return (
-        <div className="casa" onClick={() => alert('click')}>
-            {props.value}
+        <div className="casa">
+            {this.props.value}
         </div>
     );
+}
 }
 
 class Board extends React.Component {
@@ -40,14 +42,28 @@ class Board extends React.Component {
                     </div>
                     <input type="button" className="botao" name="limpar" value="Reset" onclick="limpa();" />
                 </div>
-                <div className="direita"><p>É a vez de:</p> <text id="mostra" class="vez">X</text></div>
             </div>
         );
     }
 }
 
+class Game extends React.Component {
+    render() {
+      return (
+        <div className="game">
+          <div className="game-board">
+            <Board />
+          </div>
+          <div className="game-info">
+          <div className="direita"><p>É a vez de:</p> <text id="mostra" class="vez">X</text></div>
+          </div>
+        </div>
+      );
+    }
+  }
+
 // ===================
 ReactDOM.render(
-    <Board />,
+    <Game />,
     document.getElementById('root')
 );
