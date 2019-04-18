@@ -3,22 +3,35 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Casa extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            value: null,
+        }
+    }    
+
     render(){
     return (
-        <div className="casa">
-            {this.props.value}
+        <div className="casa" onClick={() => this.setState({value: 'X'})}>
+            {this.state.value}
         </div>
     );
 }
 }
 
+function limpa() {
+    for (var i = 1; i < 4; i++) {
+        for (var j = 1; j < 4; j++) {
+            var nomepos = "pos" + i + j
+            document.getElementById(nomepos).value = "";
+        }
+    }
+}
+
 class Board extends React.Component {
     renderCasa(i) {
         return (
-            <Casa
-                value={this.props.i}
-                onClick={() => this.props.onClick(i)}
-            />
+            <Casa value={i} />
         );
     }
     render() {
@@ -26,21 +39,21 @@ class Board extends React.Component {
             <div>
                 <div id="jogo">
                     <div className="linha">
-                        {this.renderCasa(11)}
-                        {this.renderCasa(12)}
-                        {this.renderCasa(13)}
+                        {this.renderCasa("pos11")}
+                        {this.renderCasa("pos12")}
+                        {this.renderCasa("pos13")}
                     </div>
                     <div className="linha">
-                        {this.renderCasa(21)}
-                        {this.renderCasa(22)}
-                        {this.renderCasa(23)}
+                        {this.renderCasa("pos21")}
+                        {this.renderCasa("pos22")}
+                        {this.renderCasa("pos23")}
                     </div>
                     <div className="linha">
-                        {this.renderCasa(31)}
-                        {this.renderCasa(32)}
-                        {this.renderCasa(33)}
+                        {this.renderCasa("pos31")}
+                        {this.renderCasa("pos32")}
+                        {this.renderCasa("pos33")}
                     </div>
-                    <input type="button" className="botao" name="limpar" value="Reset" onclick="limpa();" />
+                    <input type="button" className="botao" name="limpar" value="Reset" onClick={limpa} />
                 </div>
             </div>
         );
