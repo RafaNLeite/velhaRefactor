@@ -27,10 +27,13 @@ class Board extends React.Component {
         this.state = {
             squares: Array(9).fill(null),
             xIsNext: true,
+            jogadaVezes: 0,
         };
     }
 
     handleClick(i) {
+        this.setState.jogadaVezes ++; //era pra aumentar o contador, mas por algum motivo não funciona, fica sempre 0
+        console.log(this.state.jogadaVezes);
         const squares = this.state.squares.slice();
         if (calculateWinner(squares) || squares[i]) {
             return;
@@ -58,14 +61,18 @@ class Board extends React.Component {
         let status;
         let status2;
 
-        if (results) {
-            winner = results[0];
-            status = "Vencedor: ";
-            status2 = winner;
-            alert("Você ganhou! Aperte o botão 'Reset' para um novo jogo");
-        } else {
-            status = "É a vez de: ";
-            status2 = (this.state.xIsNext ? "X" : "O");
+        if (this.state.jogadaVezes <= 9) { //verifica velha?
+            if (results) {
+                winner = results[0];
+                status = "Vencedor: ";
+                status2 = winner;
+                alert("Você ganhou! Aperte o botão 'Reset' para um novo jogo");
+            } else {
+                status = "É a vez de: ";
+                status2 = (this.state.xIsNext ? "X" : "O");
+            } 
+        }else{
+            alert("Velha! Aperte o botão 'Reset' para um novo jogo");
         }
 
         return (
@@ -116,10 +123,8 @@ ReactDOM.render(
 );
 
 function calculateWinner(squares) {
-    var velha = 0;
     const linhas = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
     for (let i = 0; i < linhas.length; i++) {
-        velha++;
         const [a, b, c] = linhas[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
             return squares[a];
